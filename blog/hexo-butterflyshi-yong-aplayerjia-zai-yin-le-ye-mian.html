@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>hexo-butterfly使用aplayer加载音乐页面 | Ywz</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="https://img.alexcld.com/img/author.png">
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.b21fedb4.css" as="style"><link rel="preload" href="/assets/js/app.519569dd.js" as="script"><link rel="preload" href="/assets/js/3.5c99c089.js" as="script"><link rel="preload" href="/assets/js/1.c2ac0a9b.js" as="script"><link rel="preload" href="/assets/js/20.c1886ede.js" as="script"><link rel="prefetch" href="/assets/js/10.a0a1a1a4.js"><link rel="prefetch" href="/assets/js/11.20242634.js"><link rel="prefetch" href="/assets/js/12.2ca7ce2e.js"><link rel="prefetch" href="/assets/js/13.cb0b4099.js"><link rel="prefetch" href="/assets/js/14.12cb39fa.js"><link rel="prefetch" href="/assets/js/15.2ffec52e.js"><link rel="prefetch" href="/assets/js/16.3a68c2fa.js"><link rel="prefetch" href="/assets/js/17.16dc19f7.js"><link rel="prefetch" href="/assets/js/18.3a6ea9db.js"><link rel="prefetch" href="/assets/js/19.902d5bef.js"><link rel="prefetch" href="/assets/js/21.fbc4da3a.js"><link rel="prefetch" href="/assets/js/22.60c839da.js"><link rel="prefetch" href="/assets/js/23.bcc9aa1e.js"><link rel="prefetch" href="/assets/js/24.cf8b567d.js"><link rel="prefetch" href="/assets/js/25.6d3d2a07.js"><link rel="prefetch" href="/assets/js/26.d6937401.js"><link rel="prefetch" href="/assets/js/27.f6754af0.js"><link rel="prefetch" href="/assets/js/28.a3ea08d2.js"><link rel="prefetch" href="/assets/js/29.f2c2ebdb.js"><link rel="prefetch" href="/assets/js/30.8c4553fc.js"><link rel="prefetch" href="/assets/js/31.3681bf34.js"><link rel="prefetch" href="/assets/js/32.63a49d3a.js"><link rel="prefetch" href="/assets/js/33.236852d5.js"><link rel="prefetch" href="/assets/js/34.6493ec0b.js"><link rel="prefetch" href="/assets/js/35.47085795.js"><link rel="prefetch" href="/assets/js/36.a322a5a0.js"><link rel="prefetch" href="/assets/js/37.5c5ea74e.js"><link rel="prefetch" href="/assets/js/38.3e424758.js"><link rel="prefetch" href="/assets/js/39.ba1e2c96.js"><link rel="prefetch" href="/assets/js/4.b92a0885.js"><link rel="prefetch" href="/assets/js/40.90620773.js"><link rel="prefetch" href="/assets/js/41.f5859ce0.js"><link rel="prefetch" href="/assets/js/42.d49c0792.js"><link rel="prefetch" href="/assets/js/43.0e6db635.js"><link rel="prefetch" href="/assets/js/5.38f7a318.js"><link rel="prefetch" href="/assets/js/6.19107161.js"><link rel="prefetch" href="/assets/js/7.299b7d02.js"><link rel="prefetch" href="/assets/js/8.3e84fa8d.js"><link rel="prefetch" href="/assets/js/9.5b5df0e1.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.b21fedb4.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1156296a><div data-v-1156296a><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1156296a data-v-1156296a><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-4e82dffc data-v-1156296a data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>Ywz</h3> <p class="description" data-v-4e82dffc data-v-4e82dffc></p> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><!---->
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-1156296a><header class="navbar" data-v-1156296a><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ywz</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/categories/Blog/" class="nav-link"><i class="iconfont reco-document"></i>
+  Blog
+</a></div><div class="nav-item"><a href="/notes/" class="nav-link"><i class="iconfont reco-coding"></i>
+  Notes
+</a></div><div class="nav-item"><a href="/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  About
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/monitor/" class="nav-link"><i class="undefined"></i>
+  monitor
+</a></li><li class="dropdown-item"><!----> <a href="/categories/clickhouse/" class="nav-link"><i class="undefined"></i>
+  clickhouse
+</a></li><li class="dropdown-item"><!----> <a href="/categories/docker/" class="nav-link"><i class="undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/hexo/" class="nav-link"><i class="undefined"></i>
+  hexo
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/jenkins/" class="nav-link"><i class="undefined"></i>
+  jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/categories/kubesphere/" class="nav-link"><i class="undefined"></i>
+  kubesphere
+</a></li><li class="dropdown-item"><!----> <a href="/categories/oracle/" class="nav-link"><i class="undefined"></i>
+  oracle
+</a></li><li class="dropdown-item"><!----> <a href="/categories/好剧推荐/" class="nav-link"><i class="undefined"></i>
+  好剧推荐
+</a></li><li class="dropdown-item"><!----> <a href="/categories/linux/" class="nav-link"><i class="undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Blog/" class="nav-link"><i class="undefined"></i>
+  Blog
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><a href="https://github.com/alexclownfish" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1156296a></div> <aside class="sidebar" data-v-1156296a><div class="personal-info-wrapper" data-v-828910c6 data-v-1156296a><img src="https://img.alexcld.com/img/author.png" alt="author-avatar" class="personal-img" data-v-828910c6> <!----> <div class="num" data-v-828910c6><div data-v-828910c6><h3 data-v-828910c6>28</h3> <h6 data-v-828910c6>Articles</h6></div> <div data-v-828910c6><h3 data-v-828910c6>25</h3> <h6 data-v-828910c6>Tags</h6></div></div> <ul class="social-links" data-v-828910c6></ul> <hr data-v-828910c6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/categories/Blog/" class="nav-link"><i class="iconfont reco-document"></i>
+  Blog
+</a></div><div class="nav-item"><a href="/notes/" class="nav-link"><i class="iconfont reco-coding"></i>
+  Notes
+</a></div><div class="nav-item"><a href="/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  About
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/monitor/" class="nav-link"><i class="undefined"></i>
+  monitor
+</a></li><li class="dropdown-item"><!----> <a href="/categories/clickhouse/" class="nav-link"><i class="undefined"></i>
+  clickhouse
+</a></li><li class="dropdown-item"><!----> <a href="/categories/docker/" class="nav-link"><i class="undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/hexo/" class="nav-link"><i class="undefined"></i>
+  hexo
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/jenkins/" class="nav-link"><i class="undefined"></i>
+  jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/categories/kubesphere/" class="nav-link"><i class="undefined"></i>
+  kubesphere
+</a></li><li class="dropdown-item"><!----> <a href="/categories/oracle/" class="nav-link"><i class="undefined"></i>
+  oracle
+</a></li><li class="dropdown-item"><!----> <a href="/categories/好剧推荐/" class="nav-link"><i class="undefined"></i>
+  好剧推荐
+</a></li><li class="dropdown-item"><!----> <a href="/categories/linux/" class="nav-link"><i class="undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Blog/" class="nav-link"><i class="undefined"></i>
+  Blog
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><a href="https://github.com/alexclownfish" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-4e82dffc data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>hexo-butterfly使用aplayer加载音乐页面</h3> <!----> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><!---->
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-1156296a><main class="page" style="padding-right:0;"><section><div class="page-title"><h1 class="title">hexo-butterfly使用aplayer加载音乐页面</h1> <div data-v-1ff7123e><!----> <i class="iconfont reco-date" data-v-1ff7123e><span data-v-1ff7123e>12/23/2020</span></i> <i class="iconfont reco-eye" data-v-1ff7123e><span id="/blog/hexo-butterflyshi-yong-aplayerjia-zai-yin-le-ye-mian.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-1ff7123e><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-1ff7123e><span class="tag-item" data-v-1ff7123e>hexo-butterfly使用aplayer加载音乐页面</span></i></div></div> <div class="theme-reco-content content__default"><p>由于hexo butterfly主题作者没有详细说明如何加载aplayer，之指明了aplayer官网文档。但是官网文档的教程未免有些难懂（尤其是对于新手），因为网上找到的大多为ejs创造的主题，而本主题使用了pug，所以，我将我摸索的经验在此公布，希望能带给使用pug编写的主题的朋友们一些帮助</p> <p>首先，打开shell（windows cmd），然后定位到你博客的根目录下
+接着，依次执行三条命令</p> <div class="language- extra-class"><pre class="language-text"><code>hexo new page music
+npm install aplayer
+npm install --save hexo-tag-aplayer
+</code></pre></div><p>接着，假如安装成功，则可以定位到
+主题目录\layout\includes
+看看layout.pug应该出现以下字段</p> <div class="language- extra-class"><pre class="language-text"><code> head
+    include ./head.pug
+     link(rel=&quot;stylesheet&quot; href=&quot;APlayer.min.css&quot;)
+     div(id=&quot;aplayer&quot;)
+     script(src=&quot;https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js&quot; async)
+     script(src=&quot;https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js&quot; async)
+  body
+</code></pre></div><p>若不存在</p> <div class="language- extra-class"><pre class="language-text"><code>link(rel=&quot;stylesheet&quot; href=&quot;APlayer.min.css&quot;)
+div(id=&quot;aplayer&quot;)
+script(src=&quot;https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js&quot; async)
+</code></pre></div><p>若不存在请手动加上。一定要注意缩进与上述结构一致！因为缩进是Pug的表达方式。
+接着，查看aplayer.pug，若文件不存在。请创建文件并复制以下内容手动加上</p> <div class="language- extra-class"><pre class="language-text"><code>link(rel=&quot;stylesheet&quot; type='text/css', href=&quot;https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css&quot;)
+script(type='text/javascript', src=&quot;https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js&quot;)
+script(type='text/javascript', src=&quot;https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js&quot;)
+</code></pre></div><p>最后，返回博客根目录，查看_config.yml在最后添加以下代码</p> <div class="language- extra-class"><pre class="language-text"><code>#aplayer
+aplayer: 
+  script_dir: js                      # Public 目录下脚本目录路径，默认: 'assets/js'
+  style_dir: css                         # Public 目录下样式目录路径，默认: 'assets/css'
+  #cdn: http://xxx/aplayer.min.js                # 引用 APlayer.js 外部 CDN 地址 (默认不开启)
+  #style_cdn: http://xxx/aplayer.min.css         # 引用 APlayer.css 外部 CDN 地址 (默认不开启)
+  meting: true                                  # MetingJS 支持
+  #meting_api: http://xxx/api.php                # 自定义 Meting API 地址
+  #meting_cdn: http://xxx/Meing.min.js           # 引用 Meting.js 外部 CDN 地址 (默认不开启)
+  asset_inject: true                            # 自动插入 Aplayer.js 与 Meting.js 资源脚本, 默认开启
+  #externalLink: http://xxx/aplayer.min.js       # 老版本参数，功能与参数 cdn 相同meting: true
+</code></pre></div><p>并调整</p> <div class="language- extra-class"><pre class="language-text"><code>post_asset_folder: true
+</code></pre></div><p>最后，在 博客根目录\source\music\index.md使用以下格式</p> <div class="language- extra-class"><pre class="language-text"><code>---
+title: 我的歌单
+date: 2019-05-17 16:14:00
+cover: https://cdn.jsdelivr.net/gh/radium-bit/res@latest/Music.jpg
+type: &quot;music&quot;
+---
+
+&lt;font color=#0c74d6 size=3 face=&quot;黑体&quot;&gt;**这是歌单介绍，如果不需要刻意留空**&lt;/font&gt;
+
+{% meting &quot;697054881&quot; &quot;netease&quot; &quot;playlist&quot; %}
+</code></pre></div><p>那一串数字是歌单ID，“netease”为网易云音乐。详细参数用法请参考官方文档
+歌单ID提取方法是以链接分享某个歌单
+例如
+https://music.163.com/playlist?id=313418853&amp;userid=1362990007</p> <p>红色部分就是歌单ID了</p> <p>写入完毕后，回到CMD。输入</p> <div class="language- extra-class"><pre class="language-text"><code>hexo g
+</code></pre></div><p>生成完毕！接下来就可以部署到你的服务器啦(…•˘_˘•…)</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:0;" data-v-70334359></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.519569dd.js" defer></script><script src="/assets/js/3.5c99c089.js" defer></script><script src="/assets/js/1.c2ac0a9b.js" defer></script><script src="/assets/js/20.c1886ede.js" defer></script>
+  </body>
+</html>
