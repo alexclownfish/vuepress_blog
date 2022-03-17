@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>nginx反向代理+nginx性能优化配置详解 | Ywz</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="https://img.alexcld.com/img/author.png">
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.22402ca6.css" as="style"><link rel="preload" href="/assets/js/app.3a789a29.js" as="script"><link rel="preload" href="/assets/js/3.2c2aa4f8.js" as="script"><link rel="preload" href="/assets/js/1.ae64c668.js" as="script"><link rel="preload" href="/assets/js/12.71f61563.js" as="script"><link rel="prefetch" href="/assets/js/10.376eb6e2.js"><link rel="prefetch" href="/assets/js/11.692736db.js"><link rel="prefetch" href="/assets/js/13.199df383.js"><link rel="prefetch" href="/assets/js/14.dcdee2a7.js"><link rel="prefetch" href="/assets/js/15.b854df63.js"><link rel="prefetch" href="/assets/js/16.ca8e2122.js"><link rel="prefetch" href="/assets/js/17.55b2c442.js"><link rel="prefetch" href="/assets/js/18.267e88a2.js"><link rel="prefetch" href="/assets/js/19.fb3ab505.js"><link rel="prefetch" href="/assets/js/20.01a9d729.js"><link rel="prefetch" href="/assets/js/21.e8a33154.js"><link rel="prefetch" href="/assets/js/22.37b70cbc.js"><link rel="prefetch" href="/assets/js/23.1696a079.js"><link rel="prefetch" href="/assets/js/24.cf8fa997.js"><link rel="prefetch" href="/assets/js/25.6c4b9103.js"><link rel="prefetch" href="/assets/js/26.59eb40d7.js"><link rel="prefetch" href="/assets/js/27.8fa8dbd9.js"><link rel="prefetch" href="/assets/js/28.3a52f42e.js"><link rel="prefetch" href="/assets/js/29.be537784.js"><link rel="prefetch" href="/assets/js/30.727f7b8f.js"><link rel="prefetch" href="/assets/js/31.c2492662.js"><link rel="prefetch" href="/assets/js/32.6216e537.js"><link rel="prefetch" href="/assets/js/33.569f800a.js"><link rel="prefetch" href="/assets/js/34.6397a0b8.js"><link rel="prefetch" href="/assets/js/35.daa2158d.js"><link rel="prefetch" href="/assets/js/36.a68592ca.js"><link rel="prefetch" href="/assets/js/37.e6bf9d9c.js"><link rel="prefetch" href="/assets/js/38.cc076130.js"><link rel="prefetch" href="/assets/js/39.31581624.js"><link rel="prefetch" href="/assets/js/4.b92a0885.js"><link rel="prefetch" href="/assets/js/40.97a95b93.js"><link rel="prefetch" href="/assets/js/41.f3cd47f3.js"><link rel="prefetch" href="/assets/js/42.1d751357.js"><link rel="prefetch" href="/assets/js/43.fa7f96b4.js"><link rel="prefetch" href="/assets/js/44.f6ae1ed4.js"><link rel="prefetch" href="/assets/js/45.70e7ea97.js"><link rel="prefetch" href="/assets/js/46.24f81fea.js"><link rel="prefetch" href="/assets/js/47.87947b2c.js"><link rel="prefetch" href="/assets/js/48.08198c02.js"><link rel="prefetch" href="/assets/js/49.a6feb7fb.js"><link rel="prefetch" href="/assets/js/5.806403ff.js"><link rel="prefetch" href="/assets/js/6.5b9ce283.js"><link rel="prefetch" href="/assets/js/7.48be95e7.js"><link rel="prefetch" href="/assets/js/8.bb938099.js"><link rel="prefetch" href="/assets/js/9.478acf55.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.22402ca6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1156296a><div data-v-1156296a><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1156296a data-v-1156296a><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-4e82dffc data-v-1156296a data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>Ywz</h3> <p class="description" data-v-4e82dffc data-v-4e82dffc></p> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><!---->
+            
+          <!---->
+          2022
+        </a></span></div></div> <div class="hide" data-v-1156296a><header class="navbar" data-v-1156296a><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ywz</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/notes/" class="nav-link"><i class="iconfont reco-coding"></i>
+  Notes
+</a></div><div class="nav-item"><a href="/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  About
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/monitor/" class="nav-link"><i class="undefined"></i>
+  monitor
+</a></li><li class="dropdown-item"><!----> <a href="/categories/clickhouse/" class="nav-link"><i class="undefined"></i>
+  clickhouse
+</a></li><li class="dropdown-item"><!----> <a href="/categories/docker/" class="nav-link"><i class="undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/hexo/" class="nav-link"><i class="undefined"></i>
+  hexo
+</a></li><li class="dropdown-item"><!----> <a href="/categories/jenkins/" class="nav-link"><i class="undefined"></i>
+  jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/kubesphere/" class="nav-link"><i class="undefined"></i>
+  kubesphere
+</a></li><li class="dropdown-item"><!----> <a href="/categories/oracle/" class="nav-link"><i class="undefined"></i>
+  oracle
+</a></li><li class="dropdown-item"><!----> <a href="/categories/linux/" class="nav-link"><i class="undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/skywalking/" class="nav-link"><i class="undefined"></i>
+  skywalking
+</a></li><li class="dropdown-item"><!----> <a href="/categories/好剧推荐/" class="nav-link"><i class="undefined"></i>
+  好剧推荐
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Blog/" class="nav-link"><i class="undefined"></i>
+  Blog
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="https://github.com/alexclownfish" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1156296a></div> <aside class="sidebar" data-v-1156296a><div class="personal-info-wrapper" data-v-828910c6 data-v-1156296a><img src="https://img.alexcld.com/img/author.png" alt="author-avatar" class="personal-img" data-v-828910c6> <!----> <div class="num" data-v-828910c6><div data-v-828910c6><h3 data-v-828910c6>34</h3> <h6 data-v-828910c6>Articles</h6></div> <div data-v-828910c6><h3 data-v-828910c6>31</h3> <h6 data-v-828910c6>Tags</h6></div></div> <ul class="social-links" data-v-828910c6></ul> <hr data-v-828910c6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/notes/" class="nav-link"><i class="iconfont reco-coding"></i>
+  Notes
+</a></div><div class="nav-item"><a href="/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  About
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/monitor/" class="nav-link"><i class="undefined"></i>
+  monitor
+</a></li><li class="dropdown-item"><!----> <a href="/categories/clickhouse/" class="nav-link"><i class="undefined"></i>
+  clickhouse
+</a></li><li class="dropdown-item"><!----> <a href="/categories/docker/" class="nav-link"><i class="undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/hexo/" class="nav-link"><i class="undefined"></i>
+  hexo
+</a></li><li class="dropdown-item"><!----> <a href="/categories/jenkins/" class="nav-link"><i class="undefined"></i>
+  jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/kubesphere/" class="nav-link"><i class="undefined"></i>
+  kubesphere
+</a></li><li class="dropdown-item"><!----> <a href="/categories/oracle/" class="nav-link"><i class="undefined"></i>
+  oracle
+</a></li><li class="dropdown-item"><!----> <a href="/categories/linux/" class="nav-link"><i class="undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/skywalking/" class="nav-link"><i class="undefined"></i>
+  skywalking
+</a></li><li class="dropdown-item"><!----> <a href="/categories/好剧推荐/" class="nav-link"><i class="undefined"></i>
+  好剧推荐
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Blog/" class="nav-link"><i class="undefined"></i>
+  Blog
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="https://github.com/alexclownfish" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-4e82dffc data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>nginx反向代理+nginx性能优化配置详解</h3> <!----> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><!---->
+            
+          <!---->
+          2022
+        </a></span></div></div> <div data-v-1156296a><main class="page"><section><div class="page-title"><h1 class="title">nginx反向代理+nginx性能优化配置详解</h1> <div data-v-1ff7123e><!----> <i class="iconfont reco-date" data-v-1ff7123e><span data-v-1ff7123e>10/20/2020</span></i> <i class="iconfont reco-eye" data-v-1ff7123e><span id="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-1ff7123e><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-1ff7123e><span class="tag-item" data-v-1ff7123e>nginx反向代理+nginx性能优化配置详解</span></i></div></div> <div class="theme-reco-content content__default"><h1 id="前言"><a href="#前言" class="header-anchor">#</a> 前言:</h1> <p>代理服务可简单的分为正向代理和反向代理:</p> <p>正向代理: 用于代理内部网络对Internet的连接请求(如VPN/NAT),客户端指定代理服务器,并将本来要直接发送给目标Web服务器的HTTP请求先发送到代理服务器上,然后由代理服务器去访问Web服务器, 并将Web服务器的Response回传给客户端:</p> <p>反向代理: 与正向代理相反,如果局域网向Internet提供资源,并让Internet上的其他用户可以访问局域网内资源, 也可以设置一个代理服务器, 它提供的服务就是反向代理. 反向代理服务器接受来自Internet的连接,然后将请求转发给内部网络上的服务器,并将Response回传给Internet上请求连接的客户端:</p> <h2 id="一、nginx反向代理-web服务器的调度器"><a href="#一、nginx反向代理-web服务器的调度器" class="header-anchor">#</a> 一、Nginx反向代理=Web服务器的调度器：</h2> <p>（1.）反向代理（Reverse Proxy）方式是指以代理服务器来接受客户端的连接请求，然后将请求转发给网络上的web服务器（可能是apache、nginx、tomcat、iis等），并将从web服务器上得到的结果返回给请求连接的客户端，此时代理服务器对外就表现为一个服务器。</p> <p>从上图可以看出：反向代理服务器代理网站Web服务器接收Http请求，对请求进行转发。而且nginx作为反向代理服务器可以根据用户请求的内容把请求转发给后端不同的web服务器，例如静动分离，再例如在nginx上创建多个虚拟主机，这样就成功的做到了在浏览器中输入不同域名（url）的时候访问后端的不同web服务器或web群集。</p> <p>（2.）反向代理的作用</p> <ul><li>保护网站安全：任何来自Internet的请求都必须先经过代理服务器；</li> <li>通过配置缓存功能加速Web请求：可以缓存真实Web服务器上的某些静态资源，减轻真实Web服务器的负载压力；</li> <li>实现负载均衡：充当负载均衡服务器均衡地分发请求，平衡集群中各个服务器的负载压力；</li></ul> <h2 id="二、什么是nginx"><a href="#二、什么是nginx" class="header-anchor">#</a> 二、什么是nginx</h2> <h3 id="nginx简介"><a href="#nginx简介" class="header-anchor">#</a> nginx简介</h3> <p>Nginx是一款轻量级的网页服务器、反向代理器以及电子邮件代理服务器。因它的稳定性、丰富的功能集、示例配置文件和低系统资源的消耗而闻名。Nginx（发音同engine x），它是由俄罗斯程序员Igor Sysoev所开发的。起初是供俄国大型的门户网站及搜索引擎Rambler（俄语：Рамблер）使用。此软件BSD-like协议下发行，可以在UNIX、GNU/Linux、BSD、Mac OS X、Solaris，以及Microsoft Windows等操作系统中运行。</p> <p>Nginx的应用现状：</p> <p>Nginx 已经在俄罗斯最大的门户网站── Rambler Media（www.rambler.ru）上运行，同时俄罗斯超过20%的虚拟主机平台采用Nginx作为反向代理服务器。</p> <p>在国内，已经有淘宝、新浪博客、新浪播客、网易新闻、六间房、56.com、Discuz!、水木社区、豆瓣、YUPOO、海内、迅雷在线等多家网站使用 Nginx 作为Web服务器或反向代理服务器。</p> <h3 id="nginx的核心特点"><a href="#nginx的核心特点" class="header-anchor">#</a> Nginx的核心特点</h3> <ul><li><p>跨平台：Nginx 可以在大多数OS编译运行，而且也有Windows的版本；</p></li> <li><p>配置异常简单：非常容易上手。</p></li> <li><p>非阻塞、高并发连接：官方测试能够支撑5万并发连接，在实际生产环境中跑到2～3万并发连接数。（这得益于Nginx使用了最新的epoll模型）；</p></li></ul> <p>注意：</p> <p>对于一个Web服务器来说，首先看一个请求的基本过程：建立连接—接收数据—发送数据，在系统底层看来：上述过程（建立连接—接收数据—发送数据）在系统底层就是读写事件。</p> <p>如果采用阻塞调用的方式，当读写事件没有准备好时，那么就只能等待，当前线程被挂起，等事件准备好了，才能进行读写事件。</p> <p>如果采用非阻塞调用的方式：事件马上返回，告诉你事件还没准备好呢，过会再来吧。过一会，再来检查一下事件，直到事件准备好了为止，在这期间，你就可以先去做其它事情，然后再来看看事件好了没。虽然不阻塞了，但你得不时地过来检查一下事件的状态，你可以做更多的事情了，但带来的开销也是不小的。非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程</p> <ul><li>事件驱动：通信机制采用epoll模型，支持更大的并发连接。</li></ul> <p>非阻塞通过不断检查事件的状态来判断是否进行读写操作，这样带来的开销很大，因此就有了异步非阻塞的事件处理机制。这种机制让你可以同时监控多个事件，调用他们是非阻塞的，但可以设置超时时间，在超时时间之内，如果有事件准备好了，就返回。这种机制解决了上面阻塞调用与非阻塞调用的两个问题。</p> <p>以epoll模型为例：当事件没有准备好时，就放入epoll(队列)里面。如果有事件准备好了，那么就去处理；当事件没有准备好时，才在 epoll里面等着。这样，我们就可以并发处理大量的并发了，当然，这里的并发请求，是指未处理完的请求。线程只有一个，所以同时能处理的请求当然只有一个了，只是在请求之间进行不断地切换而已，切换也是因为异步事件未准备好，而主动让出的。这里的切换是没有任何代价，你可以理解为循环处理多个准备好的事件。</p> <p>多线程方式相比，这种事件处理方式是有很大的优势的，不需要创建线程，每个请求占用的内存也很少，没有上下文切换，事件处理非常的轻量级，并发数再多也不会导致无谓的资源浪费（上下文切换）。对于apache服务器，每个请求会独占一个工作线程，当并发数上到几千时，就同时有几千的线程在处理请求了。这对操作系统来说，是个不小的挑战：因为线程带来的内存占用非常大，线程的上下文切换带来的cpu开销很大，自然性能就上不去，从而导致在高并发场景下性能下降严重。</p> <p>总结：通过异步非阻塞的事件处理机制，Nginx实现由进程循环处理多个准备好的事件，从而实现高并发和轻量级。</p> <ul><li>Master/Worker结构：一个master进程，生成一个或多个worker进程。注意：
+Master-Worker设计模式主要包含两个主要组件Master和Worker，Master维护着Worker队列，将请求下发到多个Worker并行执行，Worker主要进行实际逻辑计算，并将结果返回给Master。</li></ul> <p>nginx采用这种进程模型有什么好处？采用独立的进程，可以让互相之间不会影响，一个进程退出后，其它进程还在工作，服务不会中断，Master 进程则很快重新启动新的Worker进程。当然，Worker进程的异常退出，肯定是程序有bug了，异常退出，会导致当前Worker上的所有请求失败，不过不会影响到所有work请求，所以降低了风险。</p> <ul><li><p>内存消耗小：处理大并发的请求内存消耗非常小。在3万并发连接下，开启的10个Nginx 进程才消耗150M内存（15M*10=150M）。</p></li> <li><p>内置的健康检查功能：如果 Nginx 代理的后端的某台 Web 服务器宕机了，不会影响前端访问。</p></li> <li><p>节省带宽：支持 GZIP 压缩，可以添加浏览器本地缓存的 Header 头。</p></li> <li><p>稳定性高：用于反向代理，宕机的概率微乎其微。</p></li></ul> <h2 id="三、nginx-反向代理-apache构建web服务器集群的负载均衡"><a href="#三、nginx-反向代理-apache构建web服务器集群的负载均衡" class="header-anchor">#</a> 三、Nginx（反向代理）+apache构建Web服务器集群的负载均衡</h2> <p>nginx配置反向代理</p> <p>配置nginx作为反向代理和负载均衡，同时利用其缓存功能，将静态页面放在nginx上缓存，以达到降低后端服务器连接数的目的并检查后端web服务器的健康状况。</p> <h3 id="环境搭建"><a href="#环境搭建" class="header-anchor">#</a> 环境搭建</h3> <p>环境：</p> <p>OS:centos7.2</p> <p>nginx：192.168.197.169</p> <p>apache1:192.168.197.167</p> <p>apache2:192.168.197.168</p> <p>（1.）安装zlib-devel、pcre-devel等Nginx相关依赖包以及gcc编译环境</p> <p>yum -y install gcc gcc-c++ make libtool zlib zlib-devel pcre pcre-devel openssl openssl-devel</p> <p>注意：</p> <p>结合proxy和upstream模块实现后端web负载均衡</p> <p>使用proxy模块实现静态文件缓存</p> <p>结合nginx默认自带的 ngx_http_proxy_module 模块 和ngx_http_upstream_module模块实现后端服务器的健康检查，也可以使用第三方模块nginx_upstream_check_module</p> <p>使用nginx-sticky-module扩展模块实现Cookie会话黏贴（保持会话）</p> <p>使用ngx_cache_purge实现更强大的缓存清除功能</p> <p>上面提到的2个模块都属于第三方扩展模块，需要提前下好源码，然后编译时通过--add-moudle=src_path一起安装。</p> <p>（2.）创建Nginx用户和组，并且把用户加入到组里不让用户在控制台登录</p> <p>[root@kang ~]# groupadd www
+[root@kang ~]# useradd -g www www -s /sbin/nologin
+（3.）编译安装Nginx
+可以到官网去下载最新版本Nginx：http://nginx.org/download/nginx-1.13.8.tar.gz</p> <p>本章使用的是nginx-1.10.2.tar.gz版本来演示：</p> <p>#tar zxf nginx-1.10.2.tar.gz</p> <p>#tar zxf ngx_cache_purge-2.3.tar.gz</p> <p>#tar zxf master.tar.gz</p> <p>[root@kang ~]# tar zxf nginx-1.10.2.tar.gz
+[root@kang ~]# tar zxf ngx_cache_purge-2.3.tar.gz
+[root@kang ~]# tar zxf master.tar.gz
+[root@kang ~]# cd nginx-1.10.2/
+[root@kang nginx-1.10.2]#</p> <p>注意：nginx的所有模块必须在编译的时候添加，不能再运行的时候动态加载。
+[root@kang nginx-1.10.2]#  ./configure --prefix=/usr/local/nginx1.10 --user=www --group=www --with-http_stub_status_module --with-http_realip_module --with-http_ssl_module --with-http_gzip_static_module --http-client-body-temp-path=/var/tmp/nginx/client --http-proxy-temp-path=/var/tmp/nginx/proxy --http-fastcgi-temp-path=/var/tmp/nginx/fcgi --with-pcre --add-module=../ngx_cache_purge-2.3 --with-http_flv_module  --add-module=../nginx-goodies-nginx-sticky-module-ng-08a395c66e42</p> <p>[root@kang nginx-1.10.2]# make &amp;&amp; make install</p> <p>注意：nginx的所有模块必须在编译的时候添加，不能再运行的时候动态加载。</p> <p>（4.）优化nginx程序的执行路径</p> <p>[root@kang nginx-1.10.2]# ln -s /usr/local/nginx1.10/sbin/nginx /usr/local/sbin/
+（5.）检测Nginx服务是否有错误
+[root@kang nginx-1.10.2]# nginx -t
+发现报如下错误信息：</p> <p>（6.）那是因为没有那个指定的目录，所以接下来创建指定的目录，并设置相关操作权限</p> <p>[root@kang nginx-1.10.2]# mkdir -p /var/tmp/nginx/client
+[root@kang nginx-1.10.2]# chown -R www:www /var/tmp/nginx/
+（7.）再次测试执行
+nginx -t</p> <p>2.编写Nginx服务脚本</p> <h3 id="编写nginx服务脚本"><a href="#编写nginx服务脚本" class="header-anchor">#</a> 编写Nginx服务脚本</h3> <p>[root@kang ~]# vi /etc/init.d/nginx
+内容如下：
+#!/bin/bash
+#chkconfig: 2345 99 20
+#description: Nginx Service Control Script
+PROG=&quot;/usr/local/nginx1.10/sbin/nginx&quot;
+PIDF=&quot;/usr/local/nginx1.10/logs/nginx.pid&quot;
+case &quot;$1&quot; in
+start)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+echo &quot;Nginx service already running.&quot;
+else
+$PROG -t &amp;&gt; /dev/null
+if [ $? -eq 0 ] ; then
+$PROG
+echo &quot;Nginx service start success.&quot;
+else
+$PROG -t
+fi
+fi
+;;
+stop)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+kill -s QUIT $(cat $PIDF)
+echo &quot;Nginx service stop success.&quot;
+else
+echo &quot;Nginx service already stop&quot;
+fi
+;;
+restart)
+$0 stop
+$0 start
+;;
+status)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+echo &quot;Nginx service is running.&quot;
+else
+echo &quot;Nginx is stop.&quot;
+fi
+;;
+reload)
+netstat -anplt |grep &quot;:80&quot; &amp;&gt; /dev/null &amp;&amp; pgrep &quot;nginx&quot; &amp;&gt; /dev/null
+if [ $? -eq 0 ]
+then
+$PROG -t &amp;&gt; /dev/null
+if [ $? -eq 0 ] ; then
+kill -s HUP $(cat $PIDF)
+echo &quot;reload Nginx config success.&quot;
+else
+$PROG -t
+fi
+else
+echo &quot;Nginx service is not run.&quot;
+fi
+;;
+*)
+echo &quot;Usage: $0 {start|stop|restart|reload}&quot;
+exit 1
+esac</p> <p>（2.）给脚本添加可执行权限，以及设置服务开机自启动</p> <p>[root@kang ~]# chmod +x /etc/init.d/nginx
+[root@kang ~]# chkconfig --add nginx
+[root@kang ~]# chkconfig nginx on
+（3.）启动Nginx服务，查看端口</p> <p>（4.）访问Nginx网站测试</p> <p>注意：关闭防火墙或者放行80端口：</p> <p>[root@kang ~]# firewall-cmd --permanent --add-port=80/tcp
+success
+[root@kang ~]# firewall-cmd  --reload
+success
+[root@kang ~]#</p> <p>注意：如果你想在已安装好的nginx上添加第三方模块，依然需要重新编译，但为了不覆盖你原有的配置，请不要make install，而是直接拷贝可执行文件：</p> <p>[root@kang ~]# nginx -V</p> <p>[root@www nginx-1.10.2]#./configure  --add-module=……   #你的第三方模块
+[root@www nginx-1.10.2] #make后不要make install,改为手动拷贝，先备份
+[root@www nginx-1.10.2] #cp /usr/local/nginx1.10/sbin/nginx /usr/local/nginx1.10/sbin/nginx.bak
+[root@www nginx-1.10.2] #cp objs/nginx /usr/local/nginx1.10/sbin/nginx</p> <h2 id="相关模块功能详解"><a href="#相关模块功能详解" class="header-anchor">#</a> 相关模块功能详解</h2> <p>（1.）查看Nginx加载的模块</p> <p>注意：nginx的所有模块必须在编译的时候添加，不能再运行的时候动态加载。</p> <p>（2.）nginx-sticky-module模块：
+到同一个后端服务器上处理，这样一定程度上可以解决多个backend servers的session同步的问题 —— 因为不再需要同步，而RR轮询模式必须要运维人员自己考虑session同步的实现。
+这个模块的作用是通过cookie黏贴的方式将来自同一个客户端（浏览器）的请求发送</p> <p>另外内置的 ip_hash 也可以实现根据客户端IP来分发请求，但它很容易造成负载不均衡的情况，而如果nginx前面有CDN网络或者来自同一局域网的访问，它接收的客户端IP是一样的，容易造成负载不均衡现象。nginx-sticky-module的cookie过期时间，默认浏览器关闭就过期。</p> <p>这个模块并不合适不支持 Cookie 或手动禁用了cookie的浏览器，此时默认sticky就会切换成RR。它不能与ip_hash同时使用。</p> <p>例如：
+upstream backend {
+server 192.168.31.141:80 weight=1;
+server 192.168.31.250:80 weight=1;
+sticky; 重点模块
+}
+配置起来超级简单，一般来说一个sticky指令就够了。</p> <p>相关信息可以查看官方文档https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng</p> <p>（3.）load-balance其它调度方案：</p> <p>这里顺带介绍一下nginx的负载均衡模块支持的其它调度算法：</p> <p>轮询（默认） ：每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某台服务器宕机，故障系统被自动剔除，使用户访问不受影响。Weight 指定轮询权值，Weight值越大，分配到的访问机率越高，主要用于后端每个服务器性能不均的情况下。</p> <p>ip_hash ： 每个请求按访问IP的hash结果分配，这样来自同一个IP的访客固定访问一个后端服务器，有效解决了动态网页存在的session共享问题。当然如果这个节点不可用了，会发到下个节点，而此时没有session同步的话就注销掉了。</p> <p>least_conn ：请求被发送到当前活跃连接最少的realserver上。会考虑weight的值。</p> <p>url_hash ： 此方法按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，可以进一步提高后端缓存服务器的效率。Nginx本身是不支持url_hash的，如果需要使用这种调度算法，必须安装Nginx 的hash软件包 nginx_upstream_hash 。</p> <p>fair ：这是比上面两个更加智能的负载均衡算法。此种算法可以依据页面大小和加载时间长短智能地进行负载均衡，也就是根据后端服务器的响应时间来分配请求，响应时间短的优先分配。Nginx本身是不支持fair的，如果需要使用这种调度算法，必须下载Nginx的 upstream_fair 模块。</p> <p>（4.）负载均衡与健康检查：</p> <p>严格来说，nginx自带是没有针对负载均衡后端节点的健康检查的，但是可以通过默认自带的 ngx_http_proxy_module 模块和ngx_http_upstream_module 模块中的相关指令来完成当后端节点出现故障时，自动切换到下一个节点来提供访问。</p> <p>例如：</p> <p>upstream backend {
+sticky;
+server 192.168.31.141:80 weight=1 max_fails=2 fail_timeout=10s;
+server 192.168.31.250:80 weight=1 max_fails=2 fail_timeout=10s;
+}
+server {
+……
+location / {
+proxy_pass http://backend;
+}
+……
+}
+weight ： 轮询权值也是可以用在ip_hash的，默认值为1</p> <p>max_fails ： 允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream模块定义的错误。</p> <p>fail_timeout ： 有两层含义，一是在10s 时间内最多容许2 次失败；二是在经历了 2 次失败以后，10s时间内不分配请求到这台服务器。</p> <p>（5.）nginx的proxy缓存使用：</p> <p>缓存也就是将js、css、image等静态文件从后端服务器缓存到nginx指定的缓存目录下，既可以减轻后端服务器负担，也可以加快访问速度，但这样缓存及时清理成为了一个问题，所以需要 ngx_cache_purge 这个模块来在过期时间未到之前，手动清理缓存。</p> <p>proxy模块中常用的指令时proxy_pass和proxy_cache.</p> <p>nginx的web缓存功能的主要是由proxy_cache、fastcgi_cache指令集和相关指令集完成，proxy_cache指令负责反向代理缓存后端服务器的静态内容，fastcgi_cache主要用来处理FastCGI动态进程缓存。</p> <p>例如：</p> <p>http {
+#$upstream_cache_status记录缓存命中率
+log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
+'$status $body_bytes_sent &quot;$http_referer&quot; '
+'&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;'
+'&quot;$upstream_cache_status&quot;';
+access_log  logs/access.log  main;
+proxy_buffering on;   #代理的时候，开启或关闭缓冲后端服务器的响应
+proxy_temp_path /usr/local/nginx1.10/proxy_temp;
+proxy_cache_path /usr/local/nginx1.10/proxy_cache levels=1:2 keys_zone=my-cache:100m  inactive=600m max_size=2g;
+server {
+listen       80;
+server_name  localhost;
+root   html;
+index  index.php index.html index.htm;
+#ngx_cache_purge实现缓存清除
+location  ~/purge(/.<em>) {
+allow 127.0.0.1;
+allow 192.168.31.0/24;
+deny all;
+proxy_cache_purge my-cache $host$1$is_args$args;
+}
+location ~ .</em>.(gif|jpg|png|html|htm|css|js|ico|swf|pdf)(.*) {
+proxy_pass  http://backend;
+proxy_redirect off;
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_ignore_headers Set-Cookie;
+proxy_hide_header Set-Cookie;
+proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+proxy_cache my-cache;
+add_header Nginx-Cache $upstream_cache_status;
+proxy_cache_valid 200 304 301 302 8h;
+proxy_cache_valid 404 1m;
+proxy_cache_valid any 1d;
+proxy_cache_key $host$uri$is_args$args;
+expires 30d;
+}
+相关选项说明：</p> <p>proxy_buffering on; 代理的时候，开启或关闭缓冲后端服务器的响应。</p> <p>当开启缓冲时，nginx尽可能快地从被代理的服务器接收响应，再将它存入缓冲区中。</p> <p>proxy_temp_path ： 缓存临时目录。后端的响应并不直接返回客户端，而是先写到一个临时文件中，然后被rename一下当做缓存放在 proxy_cache_path 。0.8.9版本以后允许temp和cache两个目录在不同文件系统上（分区），然而为了减少性能损失还是建议把它们设成一个文件系统上。</p> <p>proxy_cache_path： 设置缓存目录，目录里的文件名是cache_key 的MD5值。</p> <p>levels=1:2 keys_zone=my-cache:100m表示采用2级目录结构，第一层目录只有一个字符，是由levels=1:2设置，总共二层目录，子目录名字由二个字符组成。Web缓存区名称为my-cache，内存缓存空间大小为100MB，这个缓冲zone可以被多次使用。文件系统上看到的缓存文件名类似于 /usr/local/nginx1.10/proxy_cache/c/29/b7f54b2df7773722d382f4809d65029c。</p> <p>inactive=600 max_size=2g表示600分钟没有被访问的内容自动清除，硬盘最大缓存空间为2GB，超过这个大学将清除最近最少使用的数据。</p> <p>需要在默认情况，nginx不缓存从后端响应的http头中带有Set-Cookie的对象。如果客户端发送的请求带有Cookie header，varnish将忽略缓存，直接将请求传递到后端。nginx中通过proxy_ignore_headers设置忽略它们，设置方法如下：</p> <p>解决办法：</p> <p>proxy_ignore_headers Set-Cookie;</p> <p>proxy_hide_header Set-Cookie;
+proxy_cache ： 引用前面定义的缓存区 my-cache</p> <p>proxy_cache_key ：定义如何生成缓存的键，设置web缓存的key值，nginx根据key值md5哈希存储缓存</p> <p>proxy_cache_valid ： 为不同的响应状态码设置不同的缓存时间，比如200、302等正常结果可以缓存的时间长点，而404、500等缓存时间设置短一些，这个时间到了文件就会过期，而不论是否刚被访问过。</p> <p>add_header指令来设置response header,语法: add_header name value;</p> <p>$upstream_cache_status这个变量来显示缓存的状态，我们可以在配置中添加一个http头来显示这一状态，</p> <p>$upstream_cache_status包含以下几种状态：</p> <p>·MISS 未命中，请求被传送到后端
+·HIT 缓存命中
+·EXPIRED 缓存已经过期请求被传送到后端
+·UPDATING 正在更新缓存，将使用旧的应答
+·STALE 后端将得到过期的应答</p> <p>expires ： 在响应头里设置Expires:或Cache-Control:max-age，返回给客户端的浏览器缓存失效时间。</p> <h2 id="四、配置nginx反向代理-反向代理-负载均衡-健康探测"><a href="#四、配置nginx反向代理-反向代理-负载均衡-健康探测" class="header-anchor">#</a> 四、配置nginx反向代理：反向代理+负载均衡+健康探测</h2> <p>（1.）下面的Nginx.conf实现nginx在前端做反向代理服务器的完整配置文件的例子，处理js、png等静态文件，jsp/php等动态请求转发到其它服务器tomcat/apache</p> <p>例如：
+user  www www;
+worker_processes  4;
+worker_cpu_affinity 0001 0010 0100 1000;
+error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+worker_rlimit_nofile 10240;
+pid        logs/nginx.pid;
+events {
+use epoll;
+worker_connections  4096;
+}
+http {
+include       mime.types;
+default_type  application/octet-stream;
+log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '
+'$status $body_bytes_sent &quot;$http_referer&quot; '
+'&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;'
+'&quot;$upstream_cache_status&quot;';
+access_log  logs/access.log  main;
+server_tokens off;
+sendfile        on;
+#tcp_nopush     on;
+#keepalive_timeout  0;
+keepalive_timeout  65;
+#Compression Settings
+gzip on;
+gzip_comp_level 6;
+gzip_http_version 1.1;
+gzip_proxied any;
+gzip_min_length 1k;
+gzip_buffers 16 8k;
+gzip_types text/plain text/css text/javascript application/json application/javascript application/x-javascript application/xml;
+gzip_vary on;
+#end gzip
+# http_proxy Settings
+client_max_body_size   10m;
+client_body_buffer_size   128k;
+proxy_connect_timeout   75;
+proxy_send_timeout   75;
+proxy_read_timeout   75;
+proxy_buffer_size   4k;
+proxy_buffers   4 32k;
+proxy_busy_buffers_size   64k;
+proxy_temp_file_write_size  64k;
+proxy_buffering on;
+proxy_temp_path /usr/local/nginx1.10/proxy_temp;
+proxy_cache_path /usr/local/nginx1.10/proxy_cache levels=1:2 keys_zone=my-cache:100m max_size=1000m inactive=600m max_size=2g;
+#load balance Settings
+upstream backend {
+sticky;
+server 192.168.31.141:80 weight=1 max_fails=2 fail_timeout=10s;
+server 192.168.31.250:80 weight=1 max_fails=2 fail_timeout=10s;
+}
+#virtual host Settings
+server {
+listen       80;
+server_name  localhost;
+charset utf-8;
+location  ~/purge(/.<em>) {
+allow 127.0.0.1;
+allow 192.168.31.0/24;
+deny all;
+proxy_cache_purge my-cache $host$1$is_args$args;
+}
+location / {
+index  index.php index.html index.htm;
+proxy_pass        http://backend;
+proxy_redirect off;
+proxy_set_header  Host  $host;
+proxy_set_header  X-Real-IP  $remote_addr;
+proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+proxy_ignore_headers Set-Cookie;
+proxy_hide_header Set-Cookie;
+proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+}
+location ~ .</em>.(gif|jpg|png|html|htm|css|js|ico|swf|pdf)(.*) {
+proxy_pass  http://backend;
+proxy_redirect off;
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+proxy_cache my-cache;
+add_header Nginx-Cache $upstream_cache_status;
+proxy_cache_valid 200 304 301 302 8h;
+proxy_cache_valid 404 1m;
+proxy_cache_valid any 1d;
+proxy_cache_key $host$uri$is_args$args;
+expires 30d;
+}
+location /nginx_status {
+stub_status on;
+access_log off;
+allow 192.168.31.0/24;
+deny all;
+}
+}
+}</p> <p>（2.）配置Nginx
+[root@kang ~]# vim  /usr/local/nginx1.10/conf/nginx.conf</p> <h3 id="常用指令说明"><a href="#常用指令说明" class="header-anchor">#</a> 常用指令说明:</h3> <p>main全局配置:</p> <p>woker_processes 4
+在配置文件的顶级main部分，worker角色的工作进程的个数，master进程是接收并分配请求给worker处理。这个数值简单一点可以设置为cpu的核数grep ^processor /proc/cpuinfo | wc -l，也是 auto 值，如果开启了ssl和gzip更应该设置成与逻辑CPU数量一样甚至为2倍，可以减少I/O操作。如果nginx服务器还有其它服务，可以考虑适当减少。</p> <p>worker_cpu_affinity
+也是写在main部分。在高并发情况下，通过设置cpu粘性来降低由于多CPU核切换造成的寄存器等现场重建带来的性能损耗。如worker_cpu_affinity 0001 0010 0100 1000; （四核）。</p> <p>附：</p> <p>CPU工作状况：（输入 top 后，按1 查看）</p> <p>‘
+上面的配置表示：1核CPU，开启1个进程。0001表示开启第一个cpu内核， 0010表示开启第二个cpu内核，依次类推；有多少个核，就有几位数，1表示该内核开启，0表示该内核关闭。</p> <p>例如：</p> <p>2核CPU，开启2个进程</p> <p>worker_processes  2;</p> <p>worker_cpu_affinity 01 10;
+2核CPU，开启4进程</p> <p>worker_processes 4;
+worker_cpu_affinity 01 10 01 10;
+2核CPU，开启8进程</p> <p>worker_processes  8;
+worker_cpu_affinity 01 10 01 10 01 10 01 10;
+8核CPU，开启2进程</p> <p>worker_processes  2;
+worker_cpu_affinity 10101010  01010101;
+说明：10101010表示开启了第2,4,6,8内核，01010101表示开始了1,3,5,7内核</p> <p>通过 apache 的ab测试查看nginx对CPU的使用状况：</p> <p>如果多个CPU内核的利用率都相差不多，证明nginx己经成功的利用了多核CPU。测试结束后，CPU内核的负载应该都同时降低。</p> <p>worker_connections 4096
+写在events部分。每一个worker进程能并发处理（发起）的最大连接数（包含与客户端或后端被代理服务器间等所有连接数）。
+worker_rlimit_nofile 10240
+写在main部分。worker进程的最大打开文件数限制。默认是没有设置，如果没设置的话，这个值为操作系统的限制(ulimit -n)。可以限制为操作系统最大的限制65535。把这个值设高，这样nginx就不会有“too many open files”问题了。</p> <p>use epoll</p> <p>写在events部分。在Linux操作系统下，nginx默认使用epoll事件模型，得益于此，nginx在Linux操作系统下效率相当高。同时Nginx在OpenBSD或FreeBSD操作系统上采用类似于epoll的高效事件模型kqueue。</p> <p>http服务器:
+与提供http服务相关的一些配置参数。例如：是否使用keepalive啊，是否使用gzip进行压缩等。</p> <p>sendfile on
+开启高效文件传输模式。</p> <p>keepalive_timeout 65 :</p> <p>长连接超时时间，单位是秒，长连接请求大量小文件的时候，可以减少重建连接的开销，如果设置时间过长，用户又多，长时间保持连接会占用大量资源。</p> <p>client_max_body_size 10m
+允许客户端请求的最大单文件字节数。如果有上传较大文件，请设置它的限制值</p> <p>client_body_buffer_size 128k
+缓冲区代理缓冲用户端请求的最大字节数</p> <p>server_tokens off;
+隐藏nginx的版本号</p> <p>模块http_proxy：
+这个模块实现的是nginx作为反向代理服务器的功能，包括缓存功能</p> <p>proxy_connect_timeout 60
+nginx跟后端服务器连接超时时间(代理连接超时)</p> <p>proxy_read_timeout 60</p> <p>定义从后端服务器读取响应的超时。此超时是指相邻两次读操作之间的最长时间间隔，而不是整个响应传输完成的最长时间。如果后端服务器在超时时间段内没有传输任何数据，连接将被关闭。</p> <p>定义向后端服务器传输请求的超时。此超时是指相邻两次写操作之间的最长时间间隔，而不是整个请求传输完成的最长时间。如果后端服务器在超时时间段内没有接收到任何数据，连接将被关闭。</p> <p>proxy_buffer_size 4k
+设置缓冲区的大小为size。nginx从被代理的服务器读取响应时，使用该缓冲区保存响应的开始部分。这部分通常包含着一个小小的响应头。该缓冲区大小默认等于proxy_buffers指令设置的一块缓冲区的大小，但它也可以被设置得更小。</p> <p>proxy_buffers 8 4k
+语法: proxy_buffers the_number is_size;
+为每个连接设置缓冲区的数量为number，每块缓冲区的大小为size。这些缓冲区用于保存从被代理的服务器读取的响应。每块缓冲区默认等于一个内存页的大小。这个值是4K还是8K，取决于平台。</p> <p>附：查看Linux内存页大小</p> <p>[root@kang ~]# getconf PAGESIZE
+4096
+[root@kang ~]#</p> <p>或者
+getconf PAGE_SIZE
+proxy_busy_buffers_size 64k</p> <p>高负荷下缓冲大小（默认大小是proxy_buffers指令设置单块缓冲大小的2倍）</p> <p>proxy_max_temp_file_size</p> <p>当 proxy_buffers 放不下后端服务器的响应内容时，会将一部分保存到硬盘的临时文件中，这个值用来设置最大临时文件大小，默认1024M。</p> <p>proxy_temp_file_write_size 64k</p> <p>当缓存被代理的服务器响应到临时文件时，这个选项限制每次写临时文件的大小。</p> <p>模块http_gzip：</p> <p>gzip on : 开启gzip压缩输出，减少网络传输。</p> <p>gzip_min_length 1k ： 设置允许压缩的页面最小字节数，页面字节数从header头得content-length中进行获取。建议设置成大于1k的字节数，小于1k可能会越压越大。</p> <p>gzip_buffers 4 16k ： 设置系统获取几个单位的缓存用于存储gzip的压缩结果数据流。416k代表以16k为单位，按照原始数据大小以16k为单位的4倍申请内存。如果没有设置，默认值是申请跟原始数据相同大小的内存空间去存储gzip压缩结果</p> <p>gzip_http_version 1.1 ： 用于识别 http 协议的版本，早期的浏览器不支持 Gzip 压缩，用户就会看到乱码，所以为了支持前期版本加上了这个选项，如果你用了 Nginx 的反向代理并期望也启用 Gzip 压缩的话，由于末端通信是 http/1.1，故请设置为 1.1。</p> <p>gzip_comp_level 6 ： gzip压缩比，1压缩比最小处理速度最快，9压缩比最大但处理速度最慢(传输快但比较消耗cpu)</p> <p>gzip_types ：匹配mime类型进行压缩，无论是否指定”text/html”类型总是会被压缩的。</p> <p>默认值: gzip_types text/html (默认不对js/css文件进行压缩)
+#压缩类型，匹配MIME类型进行压缩
+#不能用通配符 text/*
+#(无论是否指定)text/html默认已经压缩
+#设置哪压缩种文本文件可参考 conf/mime.types</p> <p>gzip_proxied any ： Nginx作为反向代理的时候启用，根据某些请求和应答来决定是否在对代理请求的应答启用gzip压缩，是否压缩取决于请求头中的“Via”字段，指令中可以同时指定多个不同的参数，意义如下：</p> <p>off – 关闭所有的代理结果数据的压缩
+expired – 启用压缩，如果header头中包含 “Expires” 头信息
+no-cache – 启用压缩，如果header头中包含 “Cache-Control:no-cache” 头信息
+no-store – 启用压缩，如果header头中包含 “Cache-Control:no-store” 头信息
+private – 启用压缩，如果header头中包含 “Cache-Control:private” 头信息
+no_last_modified – 启用压缩,如果header头中不包含 “Last-Modified” 头信息
+no_etag – 启用压缩 ,如果header头中不包含 “ETag” 头信息
+auth – 启用压缩 , 如果header头中包含 “Authorization” 头信息
+any – 无条件启用压缩</p> <p>gzip_vary on ：和http头有关系，加个vary头，给代理服务器用的，有的浏览器支持压缩，有的不支持，所以避免浪费不支持的也压缩，所以根据客户端的HTTP头来判断，是否需要压缩</p> <p>模块http_stream：
+这个模块通过一个简单的调度算法来实现客户端IP到后端服务器的负载均衡，upstream后接负载均衡器的名字，后端realserver以 host:port options; 方式组织在 {} 中。如果后端被代理的只有一台，也可以直接写在 proxy_pass 。</p> <p>Location:</p> <p>root /var/www/html</p> <p>定义服务器的默认网站根目录位置。如果locationURL匹配的是子目录或文件，root没什么作用，一般放在server指令里面或/下。</p> <p>index index.jsp index.html index.htm</p> <p>定义路径下默认访问的文件名，一般跟着root放</p> <p>proxy_pass http:/backend</p> <p>请求转向backend定义的服务器列表，即反向代理，对应upstream负载均衡器。也可以proxy_pass http://ip:port。</p> <p>proxy_redirectoff;</p> <p>指定是否修改被代理服务器返回的响应头中的location头域跟refresh头域数值</p> <p>例如：</p> <p>设置后端服务器“Location”响应头和“Refresh”响应头的替换文本。假设后端服务器返回的响应头是 “Location: http://localhost:8000/two/some/uri/”，那么指令</p> <p>proxy_redirecthttp://localhost:8000/two/ http://frontend/one/;</p> <p>将把字符串改写为 “Location: http://frontend/one/some/uri/”。</p> <p>proxy_set_header Host$host;</p> <p>允许重新定义或者添加发往后端服务器的请求头。</p> <p>Host的含义是表明请求的主机名，nginx反向代理服务器会向后端真实服务器发送请求，并且请求头中的host字段重写为proxy_pass指令设置的服务器。因为nginx作为反向代理使用，而如果后端真实的服务器设置有类似防盗链或者根据http请求头中的host字段来进行路由或判断功能的话，如果反向代理层的nginx不重写请求头中的host字段，将会导致请求失败。</p> <p>proxy_set_headerX-Forwarded-For $proxy_add_x_forwarded_for;</p> <p>后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</p> <p>X_Forward_For字段表示该条http请求是有谁发起的？如果反向代理服务器不重写该请求头的话，那么后端真实服务器在处理时会认为所有的请求都来自反向代理服务器，如果后端有防攻击策略的话，那么机器就被封掉了。因此，在配置用作反向代理的nginx中一般会增加两条配置，修改http的请求头：
+proxy_set_header Host $host;
+proxy_set_header X-Forward-For $remote_addr;</p> <p>proxy_next_upstream error timeoutinvalid_header http_500 http_502 http_503 http_504;</p> <p>增加故障转移，如果后端的服务器返回502、504、执行超时等错误，自动将请求转发到upstream负载均衡池中的另一台服务器，实现故障转移。</p> <p>proxy_set_headerX-Real-IP $remote_addr;</p> <p>web服务器端获得用户的真实ip但是，实际上要获得用户的真实ip，也可以通过X-Forward-For</p> <h2 id="五、验证-nginx反向代理的缓存功能、负载均衡及健康检查"><a href="#五、验证-nginx反向代理的缓存功能、负载均衡及健康检查" class="header-anchor">#</a> 五、验证：nginx反向代理的缓存功能、负载均衡及健康检查</h2> <p>（1.）下面我们来测试一下缓存功能</p> <p>如果在缓存时间之内需要更新被缓存的静态文件怎么办呢，这时候就需要手动来清除缓存了。</p> <p>ngx_cache_pure清除缓存模块使用说明</p> <p>用谷歌浏览器测试的时候，可以按F12调用开发工具，选择Network选项，我们可以看到，Response Headers，在这里我们可以看到，我们请求的是否缓存</p> <p>从图中我们可以看到，我们访问的服务器是192.168.197.169，缓存命中。</p> <p>也可以查看缓存目录或nginx的访问日志</p> <p>清除缓存:</p> <p>上述配置的proxy_cache_purge指令用于方便的清除缓存，但必须按照第三方的 ngx_cache_purge 模块才能使用</p> <p>使用 ngx_cache_purge 模块清除缓存（直接删除缓存目录下的文件也算一种办法）：
+GET方式请求URL</p> <p>即使用配置文件中的location ~ /purge(/.*)</p> <p>浏览器访问http://192.168.197.169/purge/your/may/path来清除缓存</p> <p>缓存清除成功。</p> <p>备注：
+（1）purge是ngx_cache_pure 模块指令
+（2）your/may/path 是要清除的缓存文件URL路径</p> <p>（2.）测试负载均衡</p> <p>访问Nginx服务器的ip地址，不停刷新页面浏览到后端的两台Apache网站，证明通过反向代理实现了负载均衡测试成功！！！</p> <h2 id="扩展知识"><a href="#扩展知识" class="header-anchor">#</a> 扩展知识</h2> <p>如何修改Nginx版本等信息</p> <p>1、vi /usr/local/src/nginx-1.0.12/src/core/nginx.h   #编译前编辑</p> <p>#define nginx_version
+#define NGINX_VERSION
+#define NGINX_VER
+#define NGINX_VAR
+修改上面的信息，即可更改nginx显示版本。
+2、vi/usr/local/src/nginx-1.0.12/src/http/ngx_http_special_response.c   #编译前编辑
+static u_char ngx_http_error_full_tail[] =
+static u_char ngx_http_error_tail[] =
+修改上面的信息为你自己的。
+3、vi/usr/local/src/nginx-1.0.12/src/http/ngx_http_header_filter_module.c   #编译前编辑
+static char ngx_http_server_string[]=
+修改上面的信息为你自己的。
+4、编译完成之后，修改/usr/local/nginx/conf目录下面
+fastcgi.conf、fastcgi.conf.default、fastcgi_params、fastcgi_params.default
+这四个文件里面的版本名称
+/usr/local/nginx/sbin/nginx -V  #查看nginx版本号</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结：</h2> <p>（1.）Nginx的概念、特点、原理（正向、反向代理）、为什么使用Nginx？</p> <p>（2.）Nginx的安装、</p> <p>（3.）Nginx的优化、（gzip、cache、负载均衡、健康检查、CPU核数、最大连接数、开启epoll模型、第三方模块、模块优化）</p> <p>（4.）验证Nginx网页、负载均衡、清除缓存、查看缓存等、</p> <p>（5.）Nginx不能动态加载模块，需要提前编译时安装！！！</p> <p><a href="https://me.csdn.net/weixin_45509582" target="_blank" rel="noopener noreferrer">原作者博客CSDN<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-70334359><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#一、nginx反向代理-web服务器的调度器" class="sidebar-link reco-side-一、nginx反向代理-web服务器的调度器" data-v-70334359>一、Nginx反向代理=Web服务器的调度器：</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#二、什么是nginx" class="sidebar-link reco-side-二、什么是nginx" data-v-70334359>二、什么是nginx</a></li><li class="level-3" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#nginx简介" class="sidebar-link reco-side-nginx简介" data-v-70334359>nginx简介</a></li><li class="level-3" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#nginx的核心特点" class="sidebar-link reco-side-nginx的核心特点" data-v-70334359>Nginx的核心特点</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#三、nginx-反向代理-apache构建web服务器集群的负载均衡" class="sidebar-link reco-side-三、nginx-反向代理-apache构建web服务器集群的负载均衡" data-v-70334359>三、Nginx（反向代理）+apache构建Web服务器集群的负载均衡</a></li><li class="level-3" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#环境搭建" class="sidebar-link reco-side-环境搭建" data-v-70334359>环境搭建</a></li><li class="level-3" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#编写nginx服务脚本" class="sidebar-link reco-side-编写nginx服务脚本" data-v-70334359>编写Nginx服务脚本</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#相关模块功能详解" class="sidebar-link reco-side-相关模块功能详解" data-v-70334359>相关模块功能详解</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#四、配置nginx反向代理-反向代理-负载均衡-健康探测" class="sidebar-link reco-side-四、配置nginx反向代理-反向代理-负载均衡-健康探测" data-v-70334359>四、配置nginx反向代理：反向代理+负载均衡+健康探测</a></li><li class="level-3" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#常用指令说明" class="sidebar-link reco-side-常用指令说明" data-v-70334359>常用指令说明:</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#五、验证-nginx反向代理的缓存功能、负载均衡及健康检查" class="sidebar-link reco-side-五、验证-nginx反向代理的缓存功能、负载均衡及健康检查" data-v-70334359>五、验证：nginx反向代理的缓存功能、负载均衡及健康检查</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#扩展知识" class="sidebar-link reco-side-扩展知识" data-v-70334359>扩展知识</a></li><li class="level-2" data-v-70334359><a href="/blog/nginxfan-xiang-dai-li-nginxxing-neng-you-hua-pei-zhi-xiang-jie.html#总结" class="sidebar-link reco-side-总结" data-v-70334359>总结：</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.3a789a29.js" defer></script><script src="/assets/js/3.2c2aa4f8.js" defer></script><script src="/assets/js/1.ae64c668.js" defer></script><script src="/assets/js/12.71f61563.js" defer></script>
+  </body>
+</html>

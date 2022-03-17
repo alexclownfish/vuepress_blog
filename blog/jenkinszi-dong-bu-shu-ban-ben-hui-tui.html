@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jenkins自动部署版本回退 | Ywz</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="https://img.alexcld.com/img/author.png">
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.22402ca6.css" as="style"><link rel="preload" href="/assets/js/app.3a789a29.js" as="script"><link rel="preload" href="/assets/js/3.2c2aa4f8.js" as="script"><link rel="preload" href="/assets/js/1.ae64c668.js" as="script"><link rel="preload" href="/assets/js/26.59eb40d7.js" as="script"><link rel="prefetch" href="/assets/js/10.376eb6e2.js"><link rel="prefetch" href="/assets/js/11.692736db.js"><link rel="prefetch" href="/assets/js/12.71f61563.js"><link rel="prefetch" href="/assets/js/13.199df383.js"><link rel="prefetch" href="/assets/js/14.dcdee2a7.js"><link rel="prefetch" href="/assets/js/15.b854df63.js"><link rel="prefetch" href="/assets/js/16.ca8e2122.js"><link rel="prefetch" href="/assets/js/17.55b2c442.js"><link rel="prefetch" href="/assets/js/18.267e88a2.js"><link rel="prefetch" href="/assets/js/19.fb3ab505.js"><link rel="prefetch" href="/assets/js/20.01a9d729.js"><link rel="prefetch" href="/assets/js/21.e8a33154.js"><link rel="prefetch" href="/assets/js/22.37b70cbc.js"><link rel="prefetch" href="/assets/js/23.1696a079.js"><link rel="prefetch" href="/assets/js/24.cf8fa997.js"><link rel="prefetch" href="/assets/js/25.6c4b9103.js"><link rel="prefetch" href="/assets/js/27.8fa8dbd9.js"><link rel="prefetch" href="/assets/js/28.3a52f42e.js"><link rel="prefetch" href="/assets/js/29.be537784.js"><link rel="prefetch" href="/assets/js/30.727f7b8f.js"><link rel="prefetch" href="/assets/js/31.c2492662.js"><link rel="prefetch" href="/assets/js/32.6216e537.js"><link rel="prefetch" href="/assets/js/33.569f800a.js"><link rel="prefetch" href="/assets/js/34.6397a0b8.js"><link rel="prefetch" href="/assets/js/35.daa2158d.js"><link rel="prefetch" href="/assets/js/36.a68592ca.js"><link rel="prefetch" href="/assets/js/37.e6bf9d9c.js"><link rel="prefetch" href="/assets/js/38.cc076130.js"><link rel="prefetch" href="/assets/js/39.31581624.js"><link rel="prefetch" href="/assets/js/4.b92a0885.js"><link rel="prefetch" href="/assets/js/40.97a95b93.js"><link rel="prefetch" href="/assets/js/41.f3cd47f3.js"><link rel="prefetch" href="/assets/js/42.1d751357.js"><link rel="prefetch" href="/assets/js/43.fa7f96b4.js"><link rel="prefetch" href="/assets/js/44.f6ae1ed4.js"><link rel="prefetch" href="/assets/js/45.70e7ea97.js"><link rel="prefetch" href="/assets/js/46.24f81fea.js"><link rel="prefetch" href="/assets/js/47.87947b2c.js"><link rel="prefetch" href="/assets/js/48.08198c02.js"><link rel="prefetch" href="/assets/js/49.a6feb7fb.js"><link rel="prefetch" href="/assets/js/5.806403ff.js"><link rel="prefetch" href="/assets/js/6.5b9ce283.js"><link rel="prefetch" href="/assets/js/7.48be95e7.js"><link rel="prefetch" href="/assets/js/8.bb938099.js"><link rel="prefetch" href="/assets/js/9.478acf55.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.22402ca6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1156296a><div data-v-1156296a><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-1156296a data-v-1156296a><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-4e82dffc data-v-1156296a data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>Ywz</h3> <p class="description" data-v-4e82dffc data-v-4e82dffc></p> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><!---->
+            
+          <!---->
+          2022
+        </a></span></div></div> <div class="hide" data-v-1156296a><header class="navbar" data-v-1156296a><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ywz</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/notes/" class="nav-link"><i class="iconfont reco-coding"></i>
+  Notes
+</a></div><div class="nav-item"><a href="/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  About
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/monitor/" class="nav-link"><i class="undefined"></i>
+  monitor
+</a></li><li class="dropdown-item"><!----> <a href="/categories/clickhouse/" class="nav-link"><i class="undefined"></i>
+  clickhouse
+</a></li><li class="dropdown-item"><!----> <a href="/categories/docker/" class="nav-link"><i class="undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/hexo/" class="nav-link"><i class="undefined"></i>
+  hexo
+</a></li><li class="dropdown-item"><!----> <a href="/categories/jenkins/" class="nav-link"><i class="undefined"></i>
+  jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/kubesphere/" class="nav-link"><i class="undefined"></i>
+  kubesphere
+</a></li><li class="dropdown-item"><!----> <a href="/categories/oracle/" class="nav-link"><i class="undefined"></i>
+  oracle
+</a></li><li class="dropdown-item"><!----> <a href="/categories/linux/" class="nav-link"><i class="undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/skywalking/" class="nav-link"><i class="undefined"></i>
+  skywalking
+</a></li><li class="dropdown-item"><!----> <a href="/categories/好剧推荐/" class="nav-link"><i class="undefined"></i>
+  好剧推荐
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Blog/" class="nav-link"><i class="undefined"></i>
+  Blog
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="https://github.com/alexclownfish" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1156296a></div> <aside class="sidebar" data-v-1156296a><div class="personal-info-wrapper" data-v-828910c6 data-v-1156296a><img src="https://img.alexcld.com/img/author.png" alt="author-avatar" class="personal-img" data-v-828910c6> <!----> <div class="num" data-v-828910c6><div data-v-828910c6><h3 data-v-828910c6>34</h3> <h6 data-v-828910c6>Articles</h6></div> <div data-v-828910c6><h3 data-v-828910c6>31</h3> <h6 data-v-828910c6>Tags</h6></div></div> <ul class="social-links" data-v-828910c6></ul> <hr data-v-828910c6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/notes/" class="nav-link"><i class="iconfont reco-coding"></i>
+  Notes
+</a></div><div class="nav-item"><a href="/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  About
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/nginx/" class="nav-link"><i class="undefined"></i>
+  nginx
+</a></li><li class="dropdown-item"><!----> <a href="/categories/monitor/" class="nav-link"><i class="undefined"></i>
+  monitor
+</a></li><li class="dropdown-item"><!----> <a href="/categories/clickhouse/" class="nav-link"><i class="undefined"></i>
+  clickhouse
+</a></li><li class="dropdown-item"><!----> <a href="/categories/docker/" class="nav-link"><i class="undefined"></i>
+  docker
+</a></li><li class="dropdown-item"><!----> <a href="/categories/hexo/" class="nav-link"><i class="undefined"></i>
+  hexo
+</a></li><li class="dropdown-item"><!----> <a href="/categories/jenkins/" class="nav-link"><i class="undefined"></i>
+  jenkins
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Kubernetes/" class="nav-link"><i class="undefined"></i>
+  Kubernetes
+</a></li><li class="dropdown-item"><!----> <a href="/categories/kubesphere/" class="nav-link"><i class="undefined"></i>
+  kubesphere
+</a></li><li class="dropdown-item"><!----> <a href="/categories/oracle/" class="nav-link"><i class="undefined"></i>
+  oracle
+</a></li><li class="dropdown-item"><!----> <a href="/categories/linux/" class="nav-link"><i class="undefined"></i>
+  linux
+</a></li><li class="dropdown-item"><!----> <a href="/categories/skywalking/" class="nav-link"><i class="undefined"></i>
+  skywalking
+</a></li><li class="dropdown-item"><!----> <a href="/categories/好剧推荐/" class="nav-link"><i class="undefined"></i>
+  好剧推荐
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Blog/" class="nav-link"><i class="undefined"></i>
+  Blog
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="https://github.com/alexclownfish" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-home"></i>
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-4e82dffc data-v-1156296a><h3 class="title" data-v-4e82dffc data-v-4e82dffc>jenkins自动部署版本回退</h3> <!----> <label id="box" class="inputBox" data-v-4e82dffc data-v-4e82dffc><input type="password" value="" data-v-4e82dffc> <span data-v-4e82dffc>Konck! Knock!</span> <button data-v-4e82dffc>OK</button></label> <div class="footer" data-v-4e82dffc data-v-4e82dffc><span data-v-4e82dffc><i class="iconfont reco-theme" data-v-4e82dffc></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-4e82dffc>vuePress-theme-reco</a></span> <span data-v-4e82dffc><i class="iconfont reco-copyright" data-v-4e82dffc></i> <a data-v-4e82dffc><!---->
+            
+          <!---->
+          2022
+        </a></span></div></div> <div data-v-1156296a><main class="page"><section><div class="page-title"><h1 class="title">jenkins自动部署版本回退</h1> <div data-v-1ff7123e><!----> <i class="iconfont reco-date" data-v-1ff7123e><span data-v-1ff7123e>9/29/2021</span></i> <i class="iconfont reco-eye" data-v-1ff7123e><span id="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-1ff7123e><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-1ff7123e><span class="tag-item" data-v-1ff7123e>jenkins自动部署版本回退</span></i></div></div> <div class="theme-reco-content content__default"><table><thead><tr><th>系统版本</th> <th>ubuntu 20.4 LTS WSL</th></tr></thead> <tbody><tr><td>tomcat版本</td> <td>apache-tomcat-8.5.30</td></tr> <tr><td>jenkins.war版本</td> <td>2.313</td></tr> <tr><td>java</td> <td>1.8.0</td></tr> <tr><td>maven</td> <td>3.6.3</td></tr></tbody></table> <h1 id="安装java-maven环境-我这里使用ubuntu"><a href="#安装java-maven环境-我这里使用ubuntu" class="header-anchor">#</a> 安装java,maven环境，我这里使用ubuntu</h1> <p>maven使用apt安装的，jdk使用源码装的</p> <h2 id="安装jdk"><a href="#安装jdk" class="header-anchor">#</a> 安装jdk</h2> <div class="language- extra-class"><pre class="language-text"><code>tar -zxvf jdk-8u221-linux-x64.tar.gz -C /usr/local/ 				#解压jdk至/usr/local
+</code></pre></div><p>在/etc/profile文件文件底部添加如下内容,保存退出并source /etc/profile使改动生效</p> <div class="language- extra-class"><pre class="language-text"><code>export JAVA_HOME=/usr/local/jdk1.8.0_221
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib:$CLASSPATH
+export JAVA_PATH=${JAVA_HOME}/bin:${JRE_HOME}/bin
+export PATH=$PATH:${JAVA_PATH}
+</code></pre></div><h2 id="安装maven"><a href="#安装maven" class="header-anchor">#</a> 安装maven</h2> <div class="language- extra-class"><pre class="language-text"><code>sudo apt update
+sudo apt install maven #安装maven,默认安装路径为/usr/share/maven
+</code></pre></div><p>在/etc/profile文件文件底部添加如下内容,保存退出并source /etc/profile使改动生效</p> <div class="language- extra-class"><pre class="language-text"><code>export M2_HOME=/usr/share/maven
+export MAVEN_HOME=/usr/share/maven
+export PATH=${M2_HOME}/bin:${PATH}
+</code></pre></div><h1 id="安装tomcat-jenkins"><a href="#安装tomcat-jenkins" class="header-anchor">#</a> 安装tomcat,jenkins</h1> <p>首先解压tomcat</p> <div class="language- extra-class"><pre class="language-text"><code>tar -zxvf apache-tomcat-8.5.30.tar.gz -C /usr/local/ &amp;&amp; mv /usr/local/apache-tomcat-8.5.30 /usr/local/tomcat
+</code></pre></div><p>然后把下载好的jenkins.war移动至 webapps，因为tomcat支持直接以jar,war包的形式来启动项目，所以启动tomcat也就是启动jenkins</p> <div class="language- extra-class"><pre class="language-text"><code>mv /soft/jenkins.war /usr/local/tomcat/webapps/
+</code></pre></div><p>启动jenkins</p> <div class="language- extra-class"><pre class="language-text"><code>bash /usr/local/tomcat/bin/startup.sh
+</code></pre></div><p>访问http://172.25.1.74:8080/jenkins，按照提示完成安装即可</p> <h1 id="创建project进行构建"><a href="#创建project进行构建" class="header-anchor">#</a> 创建project进行构建</h1> <p>新建test，选择构建一个自由风格的软件项目，然后点击确定
+<img src="https://img-blog.csdnimg.cn/71cb3dfad1854f5fbd51d62767746432.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+然后选择参数化构建过程，分别添加选项参数，字符参数
+<img src="https://img-blog.csdnimg.cn/d6e3a5f355164c9588a843fd8e9a6426.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+然后选择源码管理，填自己的仓库
+<img src="https://img-blog.csdnimg.cn/6c366eec27fc40db8e4323ad787e667d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt=""></p> <p>构建环境 选择Delete workspace before build starts
+<img src="https://img-blog.csdnimg.cn/86df85b7a3374ab9b43adf9bfe828bec.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+然后在构建步骤里新加一个shell，我红框圈住的地方已经做了注释，正常情况是可以启动java程序的，但是写在这里发现部署成功后，没有java的程序，日志也是为空。所以最后在主机上写了个shell来代替。
+<img src="https://img-blog.csdnimg.cn/c489140c33fc4e13bd3552233b1269be.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <div class="language- extra-class"><pre class="language-text"><code>#!/bin/bash
+cd ${WORKSPACE}/ &amp;&amp; mvn install
+cd ${WORKSPACE}/group-module &amp;&amp;  mvn clean package -Dmaven.test.skip=true
+
+case $Status  in
+  Deploy)
+    echo &quot;Status:$Status&quot;
+    path=&quot;/opt/bak/${BUILD_NUMBER}&quot;      #创建每次要备份的目录
+    if [ -d $path ];
+    then
+        echo &quot;The files is already  exists &quot;
+    else
+        mkdir -p  $path
+    fi
+    #APP_NAME=group-module-1.0-SNAPSHOT.jar
+    #pid=`ps -ef|grep $APP_NAME|grep -v grep|awk '{print $2}' `
+	#if [ -n &quot;${pid}&quot; ]; then
+	#kill -9 $pid
+	#fi
+    \cp -f ${WORKSPACE}/group-module/target/group-module-1.0-SNAPSHOT.jar $path &amp;&amp; cp -f ${WORKSPACE}/group-module/target/group-module-1.0-SNAPSHOT.jar /opt/group-module/  #将打包好的war包备份到相应目录,覆盖已存在的目标
+    #nohup java -jar /opt/group-module/group-module-1.0-SNAPSHOT.jar &gt; /opt/group-module/group-module-1.0-SNAPSHOT.log 2&gt;&amp;1 &amp;      
+    echo &quot;Completing!&quot;
+    ;;
+  Rollback)
+      echo &quot;Status:$Status&quot;
+      echo &quot;Version:$Version&quot;
+      cd /opt/bak/$Version #进入备份目录
+      #APP_NAME=group-module-1.0-SNAPSHOT.jar
+      #pid=`ps -ef|grep $APP_NAME|grep -v grep|awk '{print $2}' `
+	  #if [ -n &quot;${pid}&quot; ]; then
+	  #kill -9 $pid
+	  #fi
+      \cp -f group-module-1.0-SNAPSHOT.jar /opt/group-module/ #将备份拷贝到程序打包目录中，并覆盖之前的jar包
+      #nohup java -jar /opt/group-module/group-module-1.0-SNAPSHOT.jar &gt; /opt/group-module/group-module-1.0-SNAPSHOT.log 2&gt;&amp;1 &amp;       
+      ;;
+  *)
+  exit
+      ;;
+esac
+</code></pre></div><p>由于我们经常更新代码，提交构建，使得备份目录日益变大，所以需要写一个脚本来删除老旧的版本，将版本控制在5个，再构建的地方新增一个shell
+<img src="https://img-blog.csdnimg.cn/86bcb31c605c4601aeee8eb15afa003f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <div class="language- extra-class"><pre class="language-text"><code>#!/bin/bash
+ReservedNum=5  #保留文件数
+FileDir=/opt/bak/
+date=$(date &quot;+%Y%m%d-%H%M%S&quot;)
+
+cd $FileDir   #进入备份目录
+FileNum=$(ls -l | grep '^d' | wc -l)   #当前有几个文件夹，即几个备份
+
+while(( $FileNum &gt; $ReservedNum))
+do
+    OldFile=$(ls -rt | head -1)         #获取最旧的那个备份文件夹
+    echo  $date &quot;Delete File:&quot;$OldFile
+    rm -rf $FileDir/$OldFile
+    let &quot;FileNum--&quot;
+done 
+</code></pre></div><p>最后把我上边说的部署服务的脚本写在服务器上
+新增shell
+<img src="https://img-blog.csdnimg.cn/7523566f2b1c44019b0f8a0dccd428eb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+服务器脚本内容
+<img src="https://img-blog.csdnimg.cn/bcdd55e99c92409b858f6eafef5b9165.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <div class="language- extra-class"><pre class="language-text"><code>APP_NAME=group-module-1.0-SNAPSHOT.jar
+
+pid=`ps -ef|grep $APP_NAME|grep -v grep|awk '{print $2}' `
+if [ -n &quot;${pid}&quot; ]; then
+kill -9 $pid
+fi
+BUILD_ID=DONTKILLME
+nohup java -jar /opt/group-module/group-module-1.0-SNAPSHOT.jar &gt; /opt/group-module/group-module-1.0-SNAPSHOT.log 2&gt;&amp;1 &amp;
+</code></pre></div><h1 id="验证"><a href="#验证" class="header-anchor">#</a> 验证</h1> <h2 id="deploy"><a href="#deploy" class="header-anchor">#</a> Deploy</h2> <p>目前并没有进程
+<img src="https://img-blog.csdnimg.cn/f7fc3e661a234e5d9caed5bb46d069a4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+我们打开jenkins控制台，依次选择我们的部署方式，以及版本号，然后点击开始构建
+<img src="https://img-blog.csdnimg.cn/f18dfc5d24c94fbda7c09fdf17d3eec1.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+查看控制台输出，这里已经部署成功，也可以看到状态时Deploy
+<img src="https://img-blog.csdnimg.cn/fd7568da8b654cf9b0df56130bbd8308.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+到服务器上查看，进程已经起来了，日志显示启动成功
+<img src="https://img-blog.csdnimg.cn/5bd22f44a3ed462aa7843e3ac381b51a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+可以看下此次部署已备份至我们指定的目录，没有22的原因是，我当时构建22的时候回滚的是21
+<img src="https://img-blog.csdnimg.cn/7035da9d6a0a41fda3649641d8f71158.png" alt="在这里插入图片描述"></p> <h2 id="rollback"><a href="#rollback" class="header-anchor">#</a> Rollback</h2> <p>我们再来到控制台，依次选择之后点击构建
+<img src="https://img-blog.csdnimg.cn/b12fae6baa2a4fe28e308796dc9c839c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="">
+看控制台我们，可以看出部署的方式，及回滚的版本
+<img src="https://img-blog.csdnimg.cn/503aea992a3b4d3487d0169135eb97a0.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+再来到服务器查看，发现进程号已经变了，说明回滚成功
+<img src="https://img-blog.csdnimg.cn/2177bbdbdf644ee7b8e950b7ccb64c8b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <h1 id="以上写的是后端-这里再补发一个前端的"><a href="#以上写的是后端-这里再补发一个前端的" class="header-anchor">#</a> 以上写的是后端，这里再补发一个前端的</h1> <h2 id="安装node"><a href="#安装node" class="header-anchor">#</a> 安装node</h2> <p>这里尽量使用源码来安装与你项目匹配的node版本，否则可能出现依赖问题，或者版本问题，这里我简化安装</p> <div class="language- extra-class"><pre class="language-text"><code>apt update
+apt install nodejs npm
+</code></pre></div><h2 id="新建前端项目"><a href="#新建前端项目" class="header-anchor">#</a> 新建前端项目</h2> <p>这里我们直接copy之前后端的配置，然后再进行改动<img src="https://img-blog.csdnimg.cn/f6454d5d2291484a875f17fbdc9093ea.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+源码管理改成自己前端的仓库地址
+<img src="https://img-blog.csdnimg.cn/3d7fa1b8189d4ab49cd13118d2c7d71c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+我绿色框住的内容需要按照你自己的路径来改动<img src="https://img-blog.csdnimg.cn/19761ad746f74b0eb78098dc90bef13d.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <div class="language- extra-class"><pre class="language-text"><code>#!/bin/bash
+cd ${WORKSPACE}
+npm install 
+npm run build:prod
+echo &quot;Version:20&quot; &gt; ./dist/index.html
+zip -r web.zip ./dist/*
+case $Status  in
+  Deploy)
+    echo &quot;Status:$Status&quot;
+    path=&quot;/opt/data-detection/bak/${BUILD_NUMBER}&quot;      #创建每次要备份的目录
+    if [ -d $path ];
+    then
+        echo &quot;The files is already  exists &quot;
+    else
+        mkdir -p  $path
+    fi
+    #APP_NAME=group-module-1.0-SNAPSHOT.jar
+    #pid=`ps -ef|grep $APP_NAME|grep -v grep|awk '{print $2}' `
+	#if [ -n &quot;${pid}&quot; ]; then
+	#kill -9 $pid
+	#fi
+    \cp -f ${WORKSPACE}/web.zip $path &amp;&amp; cp -f ${WORKSPACE}/web.zip /opt/data-detection/  #将打包好的war包备份到相应目录,覆盖已存在的目标
+    #nohup java -jar /opt/group-module/group-module-1.0-SNAPSHOT.jar &gt; /opt/group-module/group-module-1.0-SNAPSHOT.log 2&gt;&amp;1 &amp;      
+    echo &quot;Completing!&quot;
+    ;;
+  Rollback)
+      echo &quot;Status:$Status&quot;
+      echo &quot;Version:$Version&quot;
+      cd /opt/data-detection/bak/$Version #进入备份目录
+      #APP_NAME=group-module-1.0-SNAPSHOT.jar
+      #pid=`ps -ef|grep $APP_NAME|grep -v grep|awk '{print $2}' `
+	  #if [ -n &quot;${pid}&quot; ]; then
+	  #kill -9 $pid
+	  #fi
+      \cp -f web.zip /opt/data-detection/ #将备份拷贝到程序打包目录中，并覆盖之前的jar包
+      #nohup java -jar /opt/group-module/group-module-1.0-SNAPSHOT.jar &gt; /opt/group-module/group-module-1.0-SNAPSHOT.log 2&gt;&amp;1 &amp;       
+      ;;
+  *)
+  exit
+      ;;
+esac
+</code></pre></div><p>文件数量控制脚本这里也需要改下路径
+<img src="https://img-blog.csdnimg.cn/c02d1dd9b8004551a547e0a44675549e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <div class="language- extra-class"><pre class="language-text"><code>#!/bin/bash
+ReservedNum=5  #保留文件数
+FileDir=/opt/data-detection/bak/
+date=$(date &quot;+%Y%m%d-%H%M%S&quot;)
+
+cd $FileDir   #进入备份目录
+FileNum=$(ls -l | grep '^d' | wc -l)   #当前有几个文件夹，即几个备份
+
+while(( $FileNum &gt; $ReservedNum))
+do
+    OldFile=$(ls -rt | head -1)         #获取最旧的那个备份文件夹
+    echo  $date &quot;Delete File:&quot;$OldFile
+    rm -rf $FileDir/$OldFile
+    let &quot;FileNum--&quot;
+done 
+</code></pre></div><p>最后执行部署的脚本需要重新写，前端的比较简单，写个解压跟权限的就好了
+<img src="https://img-blog.csdnimg.cn/44fd0bbee067404abf32bf1a98677150.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt=""> <img src="https://img-blog.csdnimg.cn/38b8268a7dbb4491a7b8d2ab59313ea7.png" alt="在这里插入图片描述"></p> <div class="language- extra-class"><pre class="language-text"><code>cd /opt/data-detection/ &amp;&amp; rm -rf dist/*
+cd /opt/data-detection/ &amp;&amp; unzip web.zip &amp;&amp; rm -rf web.zip
+chmod 777 /opt/data-detection/dist/*
+</code></pre></div><h1 id="前端演示"><a href="#前端演示" class="header-anchor">#</a> 前端演示</h1> <h2 id="deploy-2"><a href="#deploy-2" class="header-anchor">#</a> deploy</h2> <p>jenkins控制台依次选择deploy,版本号23，然后点击构建</p> <p><img src="https://img-blog.csdnimg.cn/62ce78e8cd52411c85238a97d4b0c188.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述">
+然后访问浏览器
+<img src="https://img-blog.csdnimg.cn/efee0fa146064e5a9ce7c70bb11b5cc4.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p> <h2 id="roolback"><a href="#roolback" class="header-anchor">#</a> Roolback</h2> <p><img src="https://img-blog.csdnimg.cn/344c65e41d81449da719bb8620c7c5f9.png" alt="在这里插入图片描述"></p> <p>jenkins控制台依次选择Rollback,版本号20，然后点击构建，成共之后访问浏览器</p> <p><img src="https://img-blog.csdnimg.cn/8c153922bce34bf3b934360567ae9e4a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAQWxleENsb3duZmlzaA==,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-70334359><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#安装jdk" class="sidebar-link reco-side-安装jdk" data-v-70334359>安装jdk</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#安装maven" class="sidebar-link reco-side-安装maven" data-v-70334359>安装maven</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#deploy" class="sidebar-link reco-side-deploy" data-v-70334359>Deploy</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#rollback" class="sidebar-link reco-side-rollback" data-v-70334359>Rollback</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#安装node" class="sidebar-link reco-side-安装node" data-v-70334359>安装node</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#新建前端项目" class="sidebar-link reco-side-新建前端项目" data-v-70334359>新建前端项目</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#deploy-2" class="sidebar-link reco-side-deploy-2" data-v-70334359>deploy</a></li><li class="level-2" data-v-70334359><a href="/blog/jenkinszi-dong-bu-shu-ban-ben-hui-tui.html#roolback" class="sidebar-link reco-side-roolback" data-v-70334359>Roolback</a></li></ul></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.3a789a29.js" defer></script><script src="/assets/js/3.2c2aa4f8.js" defer></script><script src="/assets/js/1.ae64c668.js" defer></script><script src="/assets/js/26.59eb40d7.js" defer></script>
+  </body>
+</html>
